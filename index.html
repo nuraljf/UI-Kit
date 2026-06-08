@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UI'Kit — Liquid Glass</title>
+
+    <!-- Geist (the kit's typeface). Falls back to system fonts offline. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/glass.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/showcase.css" />
+  </head>
+  <body>
+    <!-- Icon sprite (themes via currentColor) -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="i-plus" viewBox="0 0 20 20">
+        <path
+          d="M10 4v12M4 10h12"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+        />
+      </symbol>
+      <symbol id="i-selector" viewBox="0 0 24 24">
+        <path
+          d="M8 10l4-4 4 4M8 14l4 4 4-4"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </symbol>
+    </svg>
+
+    <div class="stage-wrap">
+      <div class="stage" id="stage">
+        <div class="stage__bg"></div>
+
+        <!-- ============ Row 1 — rectangle buttons ============ -->
+        <button class="stage__item p-btn-light ui-btn glass is-interactive">
+          Button
+        </button>
+        <button class="stage__item p-btn-dark ui-btn glass glass--dark is-interactive">
+          Button
+        </button>
+        <button class="stage__item p-btn-subtle ui-btn glass glass--subtle is-interactive">
+          Button
+        </button>
+        <button
+          class="stage__item p-icon-light ui-btn ui-btn--icon glass is-interactive"
+          aria-label="Add"
+        >
+          <svg class="ui-icon"><use href="#i-plus" /></svg>
+        </button>
+        <button
+          class="stage__item p-icon-dark ui-btn ui-btn--icon glass glass--dark is-interactive"
+          aria-label="Add"
+        >
+          <svg class="ui-icon"><use href="#i-plus" /></svg>
+        </button>
+        <button class="stage__item p-btn-small ui-btn ui-btn--sm glass is-interactive">
+          Button
+        </button>
+
+        <!-- ============ Row 2 — pill buttons ============ -->
+        <button class="stage__item p-pill-light ui-btn glass r-pill is-interactive">
+          Button
+        </button>
+        <button class="stage__item p-pill-dark ui-btn glass glass--dark r-pill is-interactive">
+          Button
+        </button>
+        <button class="stage__item p-pill-subtle ui-btn glass glass--subtle r-pill is-interactive">
+          Button
+        </button>
+        <button
+          class="stage__item p-pill-icon-light ui-btn ui-btn--icon glass r-pill is-interactive"
+          aria-label="Add"
+        >
+          <svg class="ui-icon"><use href="#i-plus" /></svg>
+        </button>
+        <button
+          class="stage__item p-pill-icon-dark ui-btn ui-btn--icon glass glass--dark r-pill is-interactive"
+          aria-label="Add"
+        >
+          <svg class="ui-icon"><use href="#i-plus" /></svg>
+        </button>
+
+        <!-- ============ Row 3 — button groups ============ -->
+        <div class="stage__item p-group-light ui-group" role="group">
+          <button class="ui-btn glass is-interactive">Button Group</button>
+          <button class="ui-group__dropdown glass is-interactive" aria-label="More options">
+            <svg class="ui-icon ui-icon--lg"><use href="#i-selector" /></svg>
+          </button>
+        </div>
+        <div class="stage__item p-group-dark ui-group" role="group">
+          <button class="ui-btn glass glass--dark glass--hl-strong is-interactive">Button Group</button>
+          <button class="ui-group__dropdown glass glass--dark glass--hl-strong is-interactive" aria-label="More options">
+            <svg class="ui-icon ui-icon--lg"><use href="#i-selector" /></svg>
+          </button>
+        </div>
+
+        <!-- ============ Row 4 — actions cards ============ -->
+        <div class="stage__item p-actions-light ui-actions glass">
+          <span class="ui-actions__label">Actions</span>
+          <button class="ui-btn glass is-interactive">
+            <svg class="ui-icon"><use href="#i-plus" /></svg>
+            <span class="ui-btn__body">
+              <span class="ui-btn__title">Button</span>
+              <span class="ui-btn__desc">Description</span>
+            </span>
+          </button>
+        </div>
+        <div class="stage__item p-actions-dark ui-actions glass glass--dark glass--hl-strong">
+          <span class="ui-actions__label">Actions</span>
+          <button class="ui-btn glass glass--dark glass--hl-strong is-interactive">
+            <svg class="ui-icon"><use href="#i-plus" /></svg>
+            <span class="ui-btn__body">
+              <span class="ui-btn__title">Button</span>
+              <span class="ui-btn__desc">Description</span>
+            </span>
+          </button>
+        </div>
+
+        <!-- ============ Center — ghost circle ============ -->
+        <button
+          class="stage__item p-circle ui-btn ui-btn--circle glass glass--ghost r-circle is-interactive"
+          aria-label="Action"
+        ></button>
+
+        <!-- ============ Row 5 — segmented controls ============ -->
+        <div class="stage__item p-seg-large ui-group ui-segmented" role="group" data-segmented>
+          <button class="ui-btn glass is-interactive" aria-pressed="true">1</button>
+          <button class="ui-btn glass is-interactive">2</button>
+          <button class="ui-btn glass is-interactive">3</button>
+          <button class="ui-btn glass is-interactive">4</button>
+        </div>
+        <div class="stage__item p-seg-small ui-group ui-segmented" role="group" data-segmented>
+          <button class="ui-btn ui-btn--sm glass is-interactive" aria-pressed="true">1</button>
+          <button class="ui-btn ui-btn--sm glass is-interactive">2</button>
+          <button class="ui-btn ui-btn--sm glass is-interactive">3</button>
+          <button class="ui-btn ui-btn--sm glass is-interactive">4</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/ui-kit.js"></script>
+  </body>
+</html>

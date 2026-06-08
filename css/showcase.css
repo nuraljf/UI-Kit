@@ -1,0 +1,113 @@
+/* ============================================================
+   UI'Kit — Showcase stage
+   Reproduces the Figma frame "UI'Kit" (117:5) at its native
+   1440 x 1024, with every element absolutely positioned at its
+   exact Figma coordinates. Scales down responsively.
+   ============================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #0a0e14;
+  font-family: var(--ui-font);
+}
+
+.stage-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* the frame itself */
+.stage {
+  position: relative;
+  width: 1440px;
+  height: 1024px;
+  overflow: hidden;
+  border-radius: 12px;
+  /* scale to viewport while preserving the 1440x1024 ratio */
+  transform-origin: top center;
+}
+
+/* --- Background -------------------------------------------------
+   The original frame uses a photo:
+   "breathtaking-view-forest-covered-with-snow-sunset-norway".
+   It could not be downloaded (network policy blocks figma.com),
+   so this is a faithful sunset-over-snow gradient stand-in.
+   Drop a real photo at assets/background.jpg and uncomment the
+   `background-image` line below for a pixel-perfect match.       */
+.stage__bg {
+  position: absolute;
+  inset: -10px -63px; /* matches the photo's offset in Figma */
+  z-index: 0;
+  background:
+    radial-gradient(
+      120% 80% at 72% 30%,
+      rgba(255, 214, 224, 0.55) 0%,
+      rgba(255, 214, 224, 0) 45%
+    ),
+    linear-gradient(
+      180deg,
+      #8fb0d6 0%,
+      #a9b9d8 14%,
+      #d7aec6 30%,
+      #e6bcc9 40%,
+      #c9c4dd 52%,
+      #b9c6dd 62%,
+      #c2d2e4 72%,
+      #d8e4f0 84%,
+      #e9f1f8 100%
+    );
+  /* background-image: url("../assets/background.jpg"); */
+  background-size: cover;
+  background-position: center;
+}
+
+/* faint vignette to seat the glass, like the original photo */
+.stage__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    140% 120% at 50% 0%,
+    transparent 60%,
+    rgba(20, 30, 50, 0.18) 100%
+  );
+}
+
+/* every direct showcase item is positioned by Figma x/y */
+.stage__item {
+  position: absolute;
+  z-index: 1;
+}
+
+/* Exact Figma coordinates (left / top) ----------------------- */
+/* Row 1 — rectangle buttons (radius 16) */
+.p-btn-light        { left: 43px;  top: 41px; }
+.p-btn-dark         { left: 158px; top: 41px; }
+.p-btn-subtle       { left: 273px; top: 41px; }
+.p-icon-light       { left: 388px; top: 42px; }
+.p-icon-dark        { left: 465px; top: 42px; }
+.p-btn-small        { left: 562px; top: 46px; }
+/* Row 2 — pill buttons (radius 34) */
+.p-pill-light       { left: 43px;  top: 124px; }
+.p-pill-dark        { left: 158px; top: 124px; }
+.p-pill-subtle      { left: 273px; top: 124px; }
+.p-pill-icon-light  { left: 388px; top: 125px; }
+.p-pill-icon-dark   { left: 465px; top: 127px; }
+/* Row 3 — button groups w/ dropdown */
+.p-group-light      { left: 43px;  top: 207px; }
+.p-group-dark       { left: 247px; top: 207px; }
+/* Row 4 — actions cards */
+.p-actions-light    { left: 43px;  top: 290px; }
+.p-actions-dark     { left: 216px; top: 290px; }
+/* Center — ghost circle */
+.p-circle           { left: 481px; top: 339px; }
+/* Row 5 — segmented controls */
+.p-seg-large        { left: 43px;  top: 439px; }
+.p-seg-small        { left: 266px; top: 445px; }

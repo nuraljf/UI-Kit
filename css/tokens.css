@@ -1,0 +1,55 @@
+/* ============================================================
+   UI'Kit — Design Tokens
+   Single source of truth, replicated 1:1 from the Figma frame
+   "UI'Kit" (node 117:5). Override these to re-skin the whole kit.
+   ============================================================ */
+
+:root {
+  /* --- Typography ----------------------------------------- */
+  --ui-font: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  --ui-text-md: 16px; /* button label            */
+  --ui-text-sm: 14px; /* small button / desc     */
+  --ui-weight-medium: 500;
+  --ui-weight-regular: 400;
+
+  /* --- Radii ---------------------------------------------- */
+  --ui-radius: 16px; /* default surface         */
+  --ui-radius-pill: 34px; /* pill / capsule          */
+  --ui-radius-circle: 64px; /* round button            */
+
+  /* --- The "liquid glass" recipe -------------------------- */
+  --ui-glass-blur: 1.5px;
+  --ui-glass-tint-light: rgba(255, 255, 255, 0.65);
+  --ui-glass-tint-light-subtle: rgba(255, 255, 255, 0.4);
+  --ui-glass-tint-ghost: rgba(255, 255, 255, 0.1);
+  --ui-glass-tint-dark: rgba(0, 0, 0, 0.65);
+
+  /* highlight = the thin inner light edge of the glass */
+  --ui-glass-highlight-strong: 0.5;
+  --ui-glass-highlight-soft: 0.25;
+
+  /* depth shadow cast by every surface */
+  --ui-drop-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+
+  /* --- Foreground colors ---------------------------------- */
+  --ui-fg-on-light: #000000;
+  --ui-fg-on-light-muted: rgba(0, 0, 0, 0.8);
+  --ui-fg-on-light-subtle: rgba(0, 0, 0, 0.65);
+  --ui-fg-on-dark: #ffffff;
+  --ui-fg-on-dark-muted: rgba(255, 255, 255, 0.8);
+
+  /* --- Spacing (matches Figma padding) -------------------- */
+  --ui-pad-y: 16px;
+  --ui-pad-x: 20px;
+  --ui-pad-y-sm: 10px;
+  --ui-pad-x-sm: 12px;
+  --ui-gap: 5px;
+
+  /* --- Motion (customize your animations here) ------------ */
+  --ui-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ui-speed: 0.18s;
+  --ui-press-scale: 0.97;
+  --ui-hover-scale: 1.015;
+  --ui-hover-lift: -1px;
+}

@@ -1,0 +1,142 @@
+/* ============================================================
+   UI'Kit — Components
+   Every component is a `.glass` surface + a layout shell.
+   Pair the structural class with a tint variant, e.g.
+     <button class="ui-btn glass glass--dark is-interactive">
+   ============================================================ */
+
+/* ---------------- Button ---------------- */
+.ui-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ui-gap);
+  padding: var(--ui-pad-y) var(--ui-pad-x);
+  border: 0;
+  background: transparent;
+  font-family: var(--ui-font);
+  font-size: var(--ui-text-md);
+  font-weight: var(--ui-weight-medium);
+  line-height: normal;
+  color: inherit;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.ui-btn--sm {
+  padding: var(--ui-pad-y-sm) var(--ui-pad-x-sm);
+  font-size: var(--ui-text-sm);
+}
+
+/* square icon-only button (padding is symmetric) */
+.ui-btn--icon {
+  padding: var(--ui-pad-y);
+}
+.ui-btn--icon.ui-btn--sm {
+  padding: var(--ui-pad-y-sm);
+}
+
+/* round button */
+.ui-btn--circle {
+  width: 100px;
+  height: 100px;
+  padding: 16px;
+}
+
+.ui-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+.ui-icon--lg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ---------------- Button group ---------------- */
+/* A row of glass segments that touch; the row's outer corners
+   are rounded while inner corners are squared off.            */
+.ui-group {
+  display: inline-flex;
+  align-items: stretch;
+}
+.ui-group > .glass {
+  --g-radius: 0;
+  box-shadow: none; /* the group casts one shared shadow */
+}
+.ui-group > .glass:first-child {
+  border-top-left-radius: var(--ui-radius);
+  border-bottom-left-radius: var(--ui-radius);
+}
+.ui-group > .glass:last-child {
+  border-top-right-radius: var(--ui-radius);
+  border-bottom-right-radius: var(--ui-radius);
+}
+.ui-group {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* dropdown handle (the narrow chevron segment) */
+.ui-group__dropdown {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  background: transparent;
+  border: 0;
+  color: inherit;
+}
+
+/* segmented control (numbered cells) */
+.ui-segmented .ui-btn {
+  font-weight: var(--ui-weight-regular);
+}
+
+/* ---------------- Actions card ---------------- */
+.ui-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  padding: 16px 10px;
+  width: 143px;
+}
+.ui-actions__label {
+  font-family: var(--ui-font);
+  font-size: var(--ui-text-sm);
+  font-weight: var(--ui-weight-regular);
+  line-height: normal;
+  color: var(--ui-fg-on-light-muted);
+}
+.glass--dark .ui-actions__label,
+.ui-actions.glass--dark .ui-actions__label {
+  color: var(--ui-fg-on-dark-muted);
+}
+
+/* button inside the actions card: icon + stacked title/description */
+.ui-actions .ui-btn {
+  width: 100%;
+  justify-content: flex-start;
+  padding: 10px 12px;
+}
+.ui-btn__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.ui-btn__title {
+  font-size: var(--ui-text-md);
+  font-weight: var(--ui-weight-medium);
+  line-height: normal;
+}
+.ui-btn__desc {
+  font-size: var(--ui-text-sm);
+  font-weight: var(--ui-weight-regular);
+  line-height: normal;
+  color: var(--ui-fg-on-light-muted);
+}
+.glass--dark .ui-btn__desc {
+  color: var(--ui-fg-on-dark-muted);
+}

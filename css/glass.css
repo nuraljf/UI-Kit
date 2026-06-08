@@ -1,0 +1,110 @@
+/* ============================================================
+   UI'Kit — Glass surface system
+   The `.glass` recipe reproduces the Figma "glass" + "stroke"
+   layers exactly:
+     • glass  -> a backdrop blur with a translucent tint
+     • stroke -> a tinted fill + 3 inset highlight shadows
+   Plus the drop shadow every surface casts.
+
+   Layering (kept inside the element via `isolation`):
+     ::before  z:-2  -> blur + tint
+     ::after   z:-1  -> inner highlight edges
+     content   z:0   -> label / icon
+   ============================================================ */
+
+.glass {
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--g-radius, var(--ui-radius));
+  box-shadow: var(--ui-drop-shadow);
+  color: var(--g-fg, var(--ui-fg-on-light));
+
+  /* per-instance knobs (overridden by variants below) */
+  --g-tint: var(--ui-glass-tint-light);
+  --g-hl: var(--ui-glass-highlight-strong);
+}
+
+/* blur + translucent tint */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  border-radius: inherit;
+  background: var(--g-tint);
+  -webkit-backdrop-filter: blur(var(--ui-glass-blur));
+  backdrop-filter: blur(var(--ui-glass-blur));
+}
+
+/* the inner light edge — three inset shadows, like the Figma stroke */
+.glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 2px 0.5px rgba(255, 255, 255, var(--g-hl)),
+    inset 2px 2px 0.5px -2px rgba(255, 255, 255, var(--g-hl)),
+    inset -2px -2px 0.5px -2px rgba(255, 255, 255, var(--g-hl));
+}
+
+/* -------- Tint variants -------- */
+.glass--dark {
+  --g-tint: var(--ui-glass-tint-dark);
+  --g-hl: var(--ui-glass-highlight-soft);
+  --g-fg: var(--ui-fg-on-dark);
+}
+
+.glass--subtle {
+  --g-tint: var(--ui-glass-tint-light-subtle);
+  --g-fg: var(--ui-fg-on-light-subtle);
+}
+
+.glass--ghost {
+  --g-tint: var(--ui-glass-tint-ghost);
+}
+
+/* dark surfaces that keep the strong highlight (e.g. the dark Actions card) */
+.glass--hl-strong {
+  --g-hl: var(--ui-glass-highlight-strong);
+}
+
+/* -------- Radius helpers -------- */
+.r-pill {
+  --g-radius: var(--ui-radius-pill);
+}
+.r-circle {
+  --g-radius: var(--ui-radius-circle);
+}
+
+/* -------- Interaction / animation layer -------- */
+.glass.is-interactive {
+  cursor: pointer;
+  transition:
+    transform var(--ui-speed) var(--ui-ease),
+    box-shadow var(--ui-speed) var(--ui-ease);
+}
+.glass.is-interactive:hover {
+  transform: translateY(var(--ui-hover-lift)) scale(var(--ui-hover-scale));
+}
+.glass.is-interactive:active {
+  transform: scale(var(--ui-press-scale));
+}
+.glass.is-interactive:focus-visible {
+  outline: none;
+  box-shadow:
+    var(--ui-drop-shadow),
+    0 0 0 3px rgba(255, 255, 255, 0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass.is-interactive {
+    transition: none;
+  }
+  .glass.is-interactive:hover,
+  .glass.is-interactive:active {
+    transform: none;
+  }
+}

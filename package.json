@@ -1,0 +1,28 @@
+{
+  "name": "@nuraljf/ui-kit",
+  "version": "0.1.0",
+  "description": "Liquid-glass UI kit — reusable glassmorphism components replicated 1:1 from Figma.",
+  "license": "MIT",
+  "type": "module",
+  "main": "css/ui-kit.css",
+  "style": "css/ui-kit.css",
+  "files": [
+    "css",
+    "js",
+    "index.html"
+  ],
+  "scripts": {
+    "start": "npx --yes serve .",
+    "release:patch": "npm version patch",
+    "release:minor": "npm version minor",
+    "release:major": "npm version major"
+  },
+  "keywords": [
+    "ui-kit",
+    "glassmorphism",
+    "liquid-glass",
+    "css",
+    "components",
+    "design-system"
+  ]
+}
