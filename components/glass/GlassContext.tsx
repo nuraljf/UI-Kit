@@ -18,6 +18,10 @@ export interface LensData {
   hl: number;
   /** corner radius in stage pixels */
   radius: number;
+  /** refraction strength multiplier (1 = subtle panel, >1 = strong lens) */
+  refract: number;
+  /** draw priority — higher wins where lenses overlap */
+  priority: number;
 }
 
 interface GlassContextValue {

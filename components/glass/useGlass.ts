@@ -13,6 +13,8 @@ export function useGlass(opts: {
   tint: [number, number, number, number];
   hl: number;
   radius: number;
+  refract?: number;
+  priority?: number;
 }) {
   const { register } = useGlassContext();
 
@@ -22,10 +24,14 @@ export function useGlass(opts: {
     tint: opts.tint,
     hl: opts.hl,
     radius: opts.radius,
+    refract: opts.refract ?? 1,
+    priority: opts.priority ?? 0,
   });
   data.current.tint = opts.tint;
   data.current.hl = opts.hl;
   data.current.radius = opts.radius;
+  data.current.refract = opts.refract ?? 1;
+  data.current.priority = opts.priority ?? 0;
 
   useEffect(() => {
     const unregister = register(data.current);

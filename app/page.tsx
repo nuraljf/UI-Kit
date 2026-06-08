@@ -87,10 +87,8 @@ export default function Page() {
           <ActionsCard variant="dark-strong" />
         </Pos>
 
-        {/* Center — ghost circle */}
-        <Pos l={748} t={284}>
-          <GhostCircle />
-        </Pos>
+        {/* Center — ghost circle (draggable + resizable lens) */}
+        <GhostCircle initialX={748} initialY={284} />
 
         {/* Row 5 — segmented controls */}
         <Pos l={43} t={439}>

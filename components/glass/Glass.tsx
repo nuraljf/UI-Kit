@@ -29,6 +29,10 @@ export interface GlassProps
   radius?: number;
   as?: "button" | "div";
   interactive?: boolean;
+  /** refraction strength multiplier (1 = subtle panel, >1 = strong lens) */
+  refract?: number;
+  /** draw priority — higher wins where lenses overlap */
+  priority?: number;
 }
 
 /**
@@ -42,6 +46,8 @@ export const Glass = forwardRef<HTMLElement, GlassProps>(function Glass(
     radius = 16,
     as = "div",
     interactive = false,
+    refract = 1,
+    priority = 0,
     className = "",
     style,
     children,
@@ -52,8 +58,8 @@ export const Glass = forwardRef<HTMLElement, GlassProps>(function Glass(
   const spec = VARIANTS[variant];
   const setLensRef = useGlass(
     useMemo(
-      () => ({ tint: spec.tint, hl: spec.hl, radius }),
-      [spec.tint, spec.hl, radius],
+      () => ({ tint: spec.tint, hl: spec.hl, radius, refract, priority }),
+      [spec.tint, spec.hl, radius, refract, priority],
     ),
   );
 
