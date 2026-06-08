@@ -1,8 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { GlassProvider } from "./GlassContext";
-import { LiquidGlassCanvas } from "./LiquidGlassCanvas";
+
+// Three.js accesses browser globals (WebGL context, canvas) so it must never
+// run on the server. Dynamic import with ssr:false defers the entire R3F tree
+// to the client, preventing the Internal Server Error on first page load.
+const LiquidGlassCanvas = dynamic(
+  () => import("./LiquidGlassCanvas").then((m) => ({ default: m.LiquidGlassCanvas })),
+  { ssr: false },
+);
 
 const STAGE_W = 1440;
 const STAGE_H = 1024;
