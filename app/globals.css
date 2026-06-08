@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   UI'Kit — design tokens (single source of truth, 1:1 Figma)
+   ============================================================ */
+:root {
+  /* Liquid-glass recipe — also consumed by the WebGL shader. */
+  --ui-glass-blur: 1.5px;
+  --ui-drop-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+
+  /* ---- transitions.dev: semantic motion custom properties ----
+     transitions.dev ships portable CSS transitions as :root custom
+     properties + `t-*` classes, guarded by prefers-reduced-motion. */
+  --t-duration: 0.18s;
+  --t-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-hover-scale: 1.015;
+  --t-hover-lift: -1px;
+  --t-press-scale: 0.97;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #0a0e14;
+  font-family: var(--font-geist), system-ui, sans-serif;
+}
+
+/* ============================================================
+   transitions.dev — `t-*` transition utilities
+   Drop-in interaction motion for the glass surfaces.
+   ============================================================ */
+.t-press {
+  transition:
+    transform var(--t-duration) var(--t-ease),
+    box-shadow var(--t-duration) var(--t-ease),
+    filter var(--t-duration) var(--t-ease);
+}
+.t-press:hover {
+  transform: translateY(var(--t-hover-lift)) scale(var(--t-hover-scale));
+}
+.t-press:active {
+  transform: scale(var(--t-press-scale));
+}
+.t-press:focus-visible {
+  outline: none;
+  box-shadow:
+    var(--ui-drop-shadow),
+    0 0 0 3px rgba(255, 255, 255, 0.7);
+}
+
+/* Same press feel, but the element keeps its own layout box (used by
+   group segments where transform must not nudge neighbours). */
+.t-fade {
+  transition:
+    background-color var(--t-duration) var(--t-ease),
+    color var(--t-duration) var(--t-ease),
+    filter var(--t-duration) var(--t-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-press,
+  .t-fade {
+    transition: none;
+  }
+  .t-press:hover,
+  .t-press:active {
+    transform: none;
+  }
+}

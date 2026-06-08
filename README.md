@@ -1,110 +1,81 @@
 # UI'Kit — Liquid Glass
 
-A reusable **glassmorphism** ("liquid glass") component kit, replicated **1:1**
-from the Figma frame [`UI'Kit`](https://www.figma.com/design/qZsmToavDcmKh6HhfdRiFP/UI-Kit?node-id=117-5).
-Zero dependencies — pure HTML + CSS, with a tiny optional JS interaction layer.
+A **glassmorphism ("liquid glass") UI kit** replicated **1:1** from the Figma
+frame [`UI'Kit`](https://www.figma.com/design/qZsmToavDcmKh6HhfdRiFP/UI-Kit?node-id=117-5),
+built with **Next.js · React · TypeScript · Tailwind CSS · transitions.dev ·
+React Three Fiber (Three.js)**.
 
-> Buttons, pills, icon buttons, button groups, segmented controls and action
-> cards rendered as liquid glass on a sunset-over-snow backdrop — open
-> `index.html` to see it.
+The glass is real WebGL: a single React Three Fiber canvas renders the
+sunset-over-snow backdrop and a custom GLSL shader that applies genuine
+rounded-rect **refraction, edge highlights and frost blur** to every panel.
 
 ## Quick start
 
-Open `index.html` in a browser to see the full kit on its stage, or run a local
-server:
-
 ```bash
-npm start          # serves the folder at http://localhost:3000
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-To use the components in your own project, link the bundle and apply the
-classes:
+`npm run build && npm start` for a production build.
 
-```html
-<link rel="stylesheet" href="css/ui-kit.css" />
+## How the liquid glass works
 
-<button class="ui-btn glass is-interactive">Button</button>
-<button class="ui-btn glass glass--dark is-interactive">Button</button>
-<button class="ui-btn glass r-pill is-interactive">Pill</button>
-```
+Unlike a CSS `backdrop-filter`, the glass here is rendered in WebGL so it can
+truly bend the light behind it:
 
-## How the glass works
+1. **One full-screen R3F canvas** (`components/glass/LiquidGlassCanvas.tsx`)
+   sits behind the UI. Its fragment shader draws the exact Figma backdrop
+   gradient, then for every glass panel computes a rounded-box SDF and:
+   - **refracts** the backdrop near the bevelled edges (lens distortion),
+   - adds a **frosted blur** (multi-tap sample),
+   - paints the **translucent tint** (light / dark / subtle / ghost),
+   - and lays in the **inner-highlight rim** matching Figma's inset stroke.
+2. **Every DOM panel registers its live bounding box** through a React context
+   (`GlassContext` + `useGlass`). The shader reads those rects each frame, so
+   the glass tracks the DOM exactly — including hover/press transforms.
+3. The **DOM layer on top** carries the text, icons, drop-shadows and all
+   interaction/accessibility. Glass surfaces paint no background of their own.
 
-Every surface is a `.glass` element. It reproduces the two Figma layers exactly:
+## Motion — transitions.dev
 
-- **blur + tint** (`::before`) — `backdrop-filter: blur(1.5px)` over a translucent fill
-- **inner highlight** (`::after`) — three inset shadows that form the glass edge
-- plus the drop shadow each surface casts.
-
-Compose a structural class + a tint variant:
-
-| Class            | Effect                                            |
-| ---------------- | ------------------------------------------------- |
-| `glass`          | base, light frosted tint `rgba(255,255,255,.65)`  |
-| `glass--dark`    | dark tint `rgba(0,0,0,.65)`, light text           |
-| `glass--subtle`  | faint tint `rgba(255,255,255,.4)`                 |
-| `glass--ghost`   | near-transparent `rgba(255,255,255,.1)`           |
-| `r-pill`         | pill radius (34px)                                |
-| `r-circle`       | circle radius (64px)                              |
-| `is-interactive` | hover / press / focus animations                  |
+Interaction motion follows the [transitions.dev](https://transitions.dev)
+convention: semantic motion custom properties on `:root` plus portable `t-*`
+transition classes (`t-press`, `t-fade`), guarded by
+`@media (prefers-reduced-motion: reduce)`. See `app/globals.css`.
 
 ## Components
 
-- **Buttons** — `.ui-btn` (default / `--sm` / `--icon` / `--circle`)
-- **Button groups** — `.ui-group` with a `.ui-group__dropdown` handle
-- **Segmented controls** — `.ui-group.ui-segmented` (click to select)
-- **Action cards** — `.ui-actions` with icon + title + description
+| Component                | File                              | Figma            |
+| ------------------------ | --------------------------------- | ---------------- |
+| `Button` / `IconButton`  | `components/ui/Button.tsx`        | button / small   |
+| `ButtonGroup`            | `components/ui/ButtonGroup.tsx`   | button group     |
+| `Segmented`              | `components/ui/Segmented.tsx`     | numbered group   |
+| `ActionsCard`            | `components/ui/ActionsCard.tsx`   | actions          |
+| `GhostCircle`            | `components/ui/GhostCircle.tsx`   | center circle    |
+| `Glass` (primitive)      | `components/glass/Glass.tsx`      | glass + stroke   |
 
-All eighteen elements from the Figma frame are reproduced at their exact
-coordinates in `index.html`.
+Variants: `light`, `dark`, `dark-strong`, `subtle`, `ghost`. Radii: `16` (default),
+`34` (pill), `64` (circle). All eighteen elements are placed at their exact
+Figma coordinates in `app/page.tsx`, on a responsively-scaled 1440×1024 stage.
 
-## Customizing — tokens & animations
-
-Everything is driven by CSS custom properties in [`css/tokens.css`](css/tokens.css).
-Override them anywhere to re-skin or re-time the kit:
-
-```css
-:root {
-  --ui-radius: 12px;        /* tighter corners        */
-  --ui-glass-blur: 3px;     /* heavier frost          */
-  --ui-speed: 0.3s;         /* slower animations      */
-  --ui-press-scale: 0.94;   /* deeper press           */
-  --ui-hover-scale: 1.03;   /* bigger hover pop        */
-}
-```
-
-## File layout
+## Project layout
 
 ```
-css/
-  tokens.css       design tokens (colors, radii, blur, motion)
-  glass.css        the .glass surface system + variants
-  components.css   buttons, groups, segmented, action cards
-  showcase.css     1:1 demo stage layout + background
-  ui-kit.css       library bundle (tokens + glass + components)
-js/
-  ui-kit.js        responsive stage scaling + segmented selection
-assets/            background photo slot (see note below)
-index.html         the 1:1 showcase
+app/
+  layout.tsx          Geist font + metadata
+  page.tsx            the 1:1 stage with all 18 elements
+  globals.css         tokens + transitions.dev t-* utilities
+components/
+  glass/              Stage, GlassContext, useGlass, Glass, LiquidGlassCanvas
+  ui/                 Button, ButtonGroup, Segmented, ActionsCard, GhostCircle
+  icons.tsx           Plus / Selector (currentColor)
+legacy/               original zero-dependency HTML/CSS version
 ```
 
-## Note on the background
+## Note on the backdrop
 
-The Figma frame sits on a photo
-(`breathtaking-view-forest-covered-with-snow-sunset-norway`). It could not be
-downloaded into this build because the environment's network policy blocks
-`figma.com`, so the showcase ships with a faithful **sunset-over-snow CSS
-gradient** stand-in. To use the real photo:
-
-1. Drop it at `assets/background.jpg`.
-2. Uncomment the `background-image` line in `css/showcase.css` (`.stage__bg`).
-
-## Versioning
-
-Push versions of the kit with the standard npm flow:
-
-```bash
-npm run release:patch   # 0.1.0 -> 0.1.1
-npm run release:minor   # 0.1.0 -> 0.2.0
-npm run release:major   # 0.1.0 -> 1.0.0
-```
+The original Figma photo
+(`breathtaking-view-forest-covered-with-snow-sunset-norway`) is served from a
+host the build environment blocks, so the shader reproduces its exact gradient
+palette. To use the real photo, sample it into a `THREE.Texture` and replace the
+`background()` function's gradient in `LiquidGlassCanvas.tsx`.

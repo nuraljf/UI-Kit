@@ -1,28 +1,39 @@
 {
   "name": "@nuraljf/ui-kit",
-  "version": "0.1.0",
-  "description": "Liquid-glass UI kit — reusable glassmorphism components replicated 1:1 from Figma.",
+  "version": "0.2.0",
+  "description": "Liquid-glass UI kit — replicated 1:1 from Figma with Next.js, React, TypeScript, Tailwind CSS, transitions.dev and React Three Fiber.",
   "license": "MIT",
-  "type": "module",
-  "main": "css/ui-kit.css",
-  "style": "css/ui-kit.css",
-  "files": [
-    "css",
-    "js",
-    "index.html"
-  ],
+  "private": true,
   "scripts": {
-    "start": "npx --yes serve .",
-    "release:patch": "npm version patch",
-    "release:minor": "npm version minor",
-    "release:major": "npm version major"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "keywords": [
     "ui-kit",
     "glassmorphism",
     "liquid-glass",
-    "css",
-    "components",
+    "nextjs",
+    "react-three-fiber",
+    "tailwindcss",
     "design-system"
-  ]
+  ],
+  "dependencies": {
+    "next": "15.5.19",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "three": "^0.171.0",
+    "@react-three/fiber": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.171.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.0"
+  }
 }
